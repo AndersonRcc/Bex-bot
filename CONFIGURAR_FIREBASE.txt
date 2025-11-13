@@ -1,0 +1,47 @@
+🔥 CONFIGURACIÓN RÁPIDA DE FIREBASE
+=====================================
+
+PASO 1: Crear Proyecto Firebase
+---------------------------------
+1. Ve a: https://console.firebase.google.com/
+2. Clic en "Agregar proyecto"
+3. Nombre: BexBot
+4. Acepta términos y crea
+
+PASO 2: Activar Firestore
+--------------------------
+1. En el menú: Build > Firestore Database
+2. Clic "Crear base de datos"
+3. Selecciona "Modo de prueba"
+4. Ubicación: us-central1
+5. Clic "Habilitar"
+
+PASO 3: Obtener Credenciales
+-----------------------------
+1. Configuración del proyecto (ícono engranaje)
+2. En "Tus apps" clic en ícono Web (</>)
+3. Nombre: BexBot Web
+4. COPIA las credenciales que aparecen
+
+PASO 4: Crear Archivo .env.local
+---------------------------------
+1. En la raíz del proyecto crea: .env.local
+2. Pega este contenido (reemplaza con tus valores):
+
+NEXT_PUBLIC_FIREBASE_API_KEY=tu_api_key_aqui
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=tu_proyecto.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=tu_proyecto_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=tu_proyecto.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=tu_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=tu_app_id
+
+PASO 5: Reiniciar Servidor
+---------------------------
+1. Detén el servidor (Ctrl+C)
+2. Ejecuta: npm run dev
+3. Ve a: http://localhost:3000/registro-empresa
+
+¡LISTO! Ahora el formulario guardará datos en Firebase.
+
+NOTA: Mientras no configures Firebase, el formulario mostrará 
+los datos en la consola del navegador (F12).
