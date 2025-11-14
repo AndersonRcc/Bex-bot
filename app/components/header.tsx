@@ -66,7 +66,7 @@ export default function Header() {
               <Link href="/analytics" className="text-text-secondary hover:text-text-primary transition-colors">
                 Analytics
               </Link>
-              <Link href="/integrations" className="text-text-secondary hover:text-text-primary transition-colors">
+              <Link href="/information" className="text-text-secondary hover:text-text-primary transition-colors">
                 Mi Información
               </Link>
             </nav>
