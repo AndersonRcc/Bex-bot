@@ -67,7 +67,7 @@ export default function Header() {
                 Analytics
               </Link>
               <Link href="/integrations" className="text-text-secondary hover:text-text-primary transition-colors">
-                Integraciones
+                Mi Información
               </Link>
             </nav>
           </div>
