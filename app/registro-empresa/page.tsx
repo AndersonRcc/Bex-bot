@@ -151,11 +151,66 @@ const handleSubmit = async (e: React.FormEvent) => {
     const docRef = doc(db, 'empresas', uid)
     await setDoc(docRef, empresaData)
     console.log("✅ Datos guardados exitosamente en Firestore")
+    try {
+      const payload = {
+        uid,
+        enterprise_information: {
+          company_name: empresaData.nombreEmpresa || '',
+          ruc: empresaData.ruc || '',
+          contact_email: empresaData.emailContacto || '',
+          business_name: empresaData.razonSocial || '',
+          address: empresaData.direccion || '',
+          phone: empresaData.telefono || '',
+          website: empresaData.sitioWeb || '',
+          sector: empresaData.sector || '',
+          company_description: empresaData.descripcion || ''
+        },
+        products: empresaData.products.map((p: any) => ({
+          product_id: p.id || '',
+          product_name: p.nombre || '',
+          price: p.precio || '',
+          description: p.descripcion || ''
+        })),
+        services: empresaData.services.map((s: any) => ({
+          service_id: s.id || '',
+          service_name: s.nombre || '',
+          service_description: s.descripcion || '',
+          special_policies: s.excepciones || ''
+        })),
+        aditional_info: {
+          business_hours: empresaData.horarioAtencion || '',
+          payment_methods: {
+            efectivo: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Efectivo') : false,
+            yape: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Yape') : false,
+            tarjeta_credito: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Tarjeta de Crédito') : false,
+            plin: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Plin') : false,
+            tarjeta_debito: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Tarjeta de Débito') : false,
+            transferencia: Array.isArray(empresaData.metodosPago) ? empresaData.metodosPago.includes('Transferencia') : false
+          },
+          return_policies: empresaData.politicasDevolucion || '',
+          delivery_time: empresaData.tiempoEntrega || '',
+          delivery_coverage: empresaData.coberturaEntrega || ''
+        }
+      }
+      const webhookResponse = await fetch('https://edgar-n8n-n8n.zxlh8i.easypanel.host/webhook/create_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      if (!webhookResponse.ok) {
+        console.error('❌ Error al llamar al webhook create_info:', webhookResponse.status, webhookResponse.statusText)
+      } else {
+        console.log('✅ Webhook create_info llamado correctamente')
+      }
+    } catch (webhookError) {
+      console.error('❌ Error al enviar datos al webhook create_info:', webhookError)
+    }
     setSuccess('¡Registro completado! Redirigiendo al Dashboard...')
     setTimeout(() => {
       router.push('/dashboard')
     }, 2000)
-
   } catch (err: any) {
     console.error('❌ Error completo:', err)
     console.error('❌ Código de error:', err.code)
